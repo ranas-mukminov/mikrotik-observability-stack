@@ -1,0 +1,2 @@
+[console_scripts]
+mosctl = mosctl.cli:main

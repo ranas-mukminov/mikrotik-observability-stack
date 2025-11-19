@@ -1,0 +1,17 @@
+route:
+  receiver: default
+  group_by: ['alertname', 'device']
+  group_wait: 30s
+  group_interval: 5m
+  repeat_interval: 3h
+receivers:
+  - name: default
+    webhook_configs:
+      - url: http://example.com/webhook
+        send_resolved: true
+inhibit_rules:
+  - source_match:
+      severity: critical
+    target_match:
+      severity: warning
+    equal: ['alertname']

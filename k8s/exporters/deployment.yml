@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: routeros-exporter
+  namespace: observability-exporters
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: routeros-exporter
+  template:
+    metadata:
+      labels:
+        app: routeros-exporter
+    spec:
+      containers:
+        - name: routeros-exporter
+          image: ghcr.io/swoga/mikrotik-exporter:latest
+          args:
+            - --config=/config/config.yml
+          volumeMounts:
+            - name: config
+              mountPath: /config
+      volumes:
+        - name: config
+          configMap:
+            name: routeros-exporter-config

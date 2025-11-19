@@ -1,0 +1,51 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mikrotik-observability-stack"
+version = "0.1.0"
+description = "MikroTik Observability Stack Control CLI"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [
+  { name = "Ranas Mukminov", email = "hi@run-as-daemon.ru" }
+]
+license = { text = "Apache-2.0" }
+dependencies = [
+  "typer[all]>=0.9",
+  "rich>=13.9",
+  "PyYAML>=6.0",
+  "pydantic>=1.10",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=7.4",
+  "pytest-cov>=4.1",
+  "ruff>=0.1",
+  "black>=23.12",
+  "yamllint>=1.32",
+  "pip-audit>=2.7",
+  "mypy>=1.8",
+]
+
+[project.scripts]
+mosctl = "mosctl.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "cli"}
+packages = ["mosctl"]
+include-package-data = true
+
+[tool.black]
+line-length = 100
+
+[tool.ruff]
+line-length = 100
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+filterwarnings = [
+  "ignore::DeprecationWarning",
+]

@@ -1,0 +1,57 @@
+{
+  "id": null,
+  "uid": "mikrotik-overview",
+  "title": "MikroTik Overview",
+  "tags": ["mikrotik", "overview"],
+  "timezone": "browser",
+  "schemaVersion": 38,
+  "version": 1,
+  "editable": true,
+  "panels": [
+    {
+      "type": "timeseries",
+      "title": "CPU usage",
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "avg by (instance) (mikrotik_cpu_usage)"
+        }
+      ],
+      "gridPos": {"x": 0, "y": 0, "w": 12, "h": 8}
+    },
+    {
+      "type": "timeseries",
+      "title": "Memory usage",
+      "targets": [
+        {
+          "refId": "B",
+          "expr": "avg by (instance) (mikrotik_memory_used_bytes / mikrotik_memory_total_bytes)"
+        }
+      ],
+      "gridPos": {"x": 12, "y": 0, "w": 12, "h": 8}
+    },
+    {
+      "type": "table",
+      "title": "Interface health",
+      "targets": [
+        {
+          "refId": "C",
+          "expr": "last_over_time(mikrotik_interface_running[5m])"
+        }
+      ],
+      "gridPos": {"x": 0, "y": 8, "w": 24, "h": 8}
+    }
+  ],
+  "templating": {
+    "list": [
+      {
+        "name": "router",
+        "type": "query",
+        "datasource": "Prometheus",
+        "query": "label_values(mikrotik_cpu_usage, instance)",
+        "multi": true,
+        "includeAll": true
+      }
+    ]
+  }
+}

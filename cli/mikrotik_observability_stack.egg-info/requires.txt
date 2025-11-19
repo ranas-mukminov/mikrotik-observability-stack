@@ -1,0 +1,13 @@
+typer[all]>=0.9
+rich>=13.9
+PyYAML>=6.0
+pydantic>=1.10
+
+[dev]
+pytest>=7.4
+pytest-cov>=4.1
+ruff>=0.1
+black>=23.12
+yamllint>=1.32
+pip-audit>=2.7
+mypy>=1.8

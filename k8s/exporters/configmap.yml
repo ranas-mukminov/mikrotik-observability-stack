@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: routeros-exporter-config
+  namespace: observability-exporters
+data:
+  config.yml: |
+    routers: []

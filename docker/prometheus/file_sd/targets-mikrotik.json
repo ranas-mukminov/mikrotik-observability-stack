@@ -1,0 +1,11 @@
+[
+  {
+    "labels": {
+      "router": "edge-router",
+      "address": "192.0.2.1",
+      "site": "hq",
+      "exporter": "routeros"
+    },
+    "targets": ["routeros-exporter:9436"]
+  }
+]

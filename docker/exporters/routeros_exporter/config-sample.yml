@@ -1,0 +1,15 @@
+routers:
+  - name: edge-router
+    address: 192.0.2.1
+    user: observability
+    password: change-me
+    tls: false
+    allow_insecure: true
+    comment: "Sample device"
+metrics:
+  - name: system
+  - name: interfaces
+  - name: queues
+listen:
+  address: :9436
+  enable_pprof: false

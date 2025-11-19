@@ -1,0 +1,17 @@
+modules:
+  mikrotik:
+    version: 2
+    auth:
+      community: observability
+    walk:
+      - 1.3.6.1.2.1.1 # system
+      - 1.3.6.1.2.1.2 # interfaces
+      - 1.3.6.1.4.1.14988.1 # MikroTik specific
+    lookups:
+      - source_indexes: [ifIndex]
+        lookup: ifDescr
+    metrics:
+      - name: mikrotik_if_octets
+        oid: 1.3.6.1.2.1.2.2.1.16
+        type: counter
+        help: Outgoing octets per interface

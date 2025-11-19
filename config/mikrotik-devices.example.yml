@@ -1,0 +1,20 @@
+routers:
+  - name: edge-router
+    address: 192.0.2.1
+    exporter: routeros
+    api_port: 8728
+    username: observability
+    password: change-me
+    labels:
+      site: hq
+      role: edge
+  - name: core-switch
+    address: 198.51.100.10
+    exporter: snmp
+    snmp:
+      version: 2c
+      community: observability
+      port: 161
+    labels:
+      site: dc
+      role: distribution

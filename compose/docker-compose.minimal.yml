@@ -1,0 +1,59 @@
+name: mikrotik-observability-minimal
+services:
+  prometheus:
+    image: prom/prometheus:v2.51.2
+    restart: unless-stopped
+    env_file:
+      - ../.env
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --storage.tsdb.retention.time=${PROMETHEUS_RETENTION_DAYS:-15}d
+      - --web.enable-lifecycle
+    volumes:
+      - prometheus-data:/prometheus
+      - ../docker/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ../docker/prometheus/file_sd:/etc/prometheus/file_sd:ro
+      - ../docker/prometheus/alerts:/etc/prometheus/alerts:ro
+    ports:
+      - "${PROMETHEUS_PORT:-9090}:9090"
+    networks:
+      - observability
+
+  grafana:
+    image: grafana/grafana:10.4.2
+    restart: unless-stopped
+    depends_on:
+      - prometheus
+    env_file:
+      - ../.env
+    environment:
+      GF_SECURITY_ADMIN_USER: ${GRAFANA_ADMIN_USER:-admin}
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD:-admin}
+      GF_PATHS_PROVISIONING: /etc/grafana/provisioning
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ../docker/grafana/provisioning:/etc/grafana/provisioning:ro
+    ports:
+      - "${GRAFANA_PORT:-3000}:3000"
+    networks:
+      - observability
+
+  routeros-exporter:
+    image: ghcr.io/swoga/mikrotik-exporter:latest
+    restart: unless-stopped
+    env_file:
+      - ../.env
+    volumes:
+      - ../docker/exporters/routeros_exporter/config-sample.yml:/config/config.yml:ro
+    command: ["--config=/config/config.yml"]
+    networks:
+      - observability
+
+networks:
+  observability:
+    name: observability
+
+volumes:
+  prometheus-data:
+  grafana-data:

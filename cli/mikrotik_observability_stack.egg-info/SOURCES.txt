@@ -1,0 +1,14 @@
+LICENSE
+README.md
+pyproject.toml
+cli/mikrotik_observability_stack.egg-info/PKG-INFO
+cli/mikrotik_observability_stack.egg-info/SOURCES.txt
+cli/mikrotik_observability_stack.egg-info/dependency_links.txt
+cli/mikrotik_observability_stack.egg-info/entry_points.txt
+cli/mikrotik_observability_stack.egg-info/requires.txt
+cli/mikrotik_observability_stack.egg-info/top_level.txt
+cli/mosctl/__init__.py
+cli/mosctl/cli.py
+cli/mosctl/config_loader.py
+cli/mosctl/test_targets.py
+cli/mosctl/validate.py

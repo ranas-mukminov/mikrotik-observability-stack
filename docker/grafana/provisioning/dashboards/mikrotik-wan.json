@@ -1,0 +1,64 @@
+{
+  "id": null,
+  "uid": "mikrotik-wan",
+  "title": "MikroTik WAN Throughput",
+  "schemaVersion": 38,
+  "version": 1,
+  "panels": [
+    {
+      "type": "timeseries",
+      "title": "WAN RX Mbps",
+      "gridPos": {"x": 0, "y": 0, "w": 12, "h": 8},
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum by (router, interface) (rate(mikrotik_interface_rx_bytes{interface=~\"ether1|wan.*\"}[5m])) / 1e6"
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "WAN TX Mbps",
+      "gridPos": {"x": 12, "y": 0, "w": 12, "h": 8},
+      "targets": [
+        {
+          "refId": "B",
+          "expr": "sum by (router, interface) (rate(mikrotik_interface_tx_bytes{interface=~\"ether1|wan.*\"}[5m])) / 1e6"
+        }
+      ]
+    },
+    {
+      "type": "stat",
+      "title": "Packet loss (%)",
+      "gridPos": {"x": 0, "y": 8, "w": 8, "h": 6},
+      "targets": [
+        {
+          "refId": "C",
+          "expr": "avg by (router) (mikrotik_netwatch_loss_percent)"
+        }
+      ]
+    },
+    {
+      "type": "stat",
+      "title": "Latency (ms)",
+      "gridPos": {"x": 8, "y": 8, "w": 8, "h": 6},
+      "targets": [
+        {
+          "refId": "D",
+          "expr": "avg by (router) (mikrotik_netwatch_latency_ms)"
+        }
+      ]
+    }
+  ],
+  "templating": {
+    "list": [
+      {
+        "name": "router",
+        "type": "query",
+        "datasource": "Prometheus",
+        "query": "label_values(mikrotik_interface_rx_bytes, router)",
+        "includeAll": true
+      }
+    ]
+  }
+}

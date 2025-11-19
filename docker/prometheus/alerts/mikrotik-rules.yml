@@ -1,0 +1,38 @@
+groups:
+  - name: mikrotik-health
+    rules:
+      - alert: MikroTikHighCPU
+        expr: avg by (instance) (mikrotik_cpu_usage) > 80
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High CPU on {{ $labels.instance }}"
+          description: "CPU utilization is {{ $value | printf "%.1f" }}% over 5m"
+
+      - alert: MikroTikLowMemory
+        expr: avg by (instance) (mikrotik_memory_available_bytes / mikrotik_memory_total_bytes) < 0.1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Low free memory on {{ $labels.instance }}"
+          description: "Available memory below 10%"
+
+      - alert: MikroTikInterfaceDown
+        expr: max by (instance, interface) (mikrotik_interface_running == 0) == 1
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Interface {{ $labels.interface }} down on {{ $labels.instance }}"
+          description: "Router reported interface state down"
+
+      - alert: MikroTikPacketLoss
+        expr: avg_over_time(mikrotik_netwatch_loss_percent[5m]) > 20
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Packet loss above 20% on {{ $labels.instance }}"
+          description: "Netwatch reported sustained packet loss"

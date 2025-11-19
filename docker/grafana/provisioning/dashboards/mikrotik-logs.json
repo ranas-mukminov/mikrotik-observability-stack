@@ -1,0 +1,34 @@
+{
+  "uid": "mikrotik-logs",
+  "title": "MikroTik Logs",
+  "schemaVersion": 38,
+  "version": 1,
+  "panels": [
+    {
+      "type": "logs",
+      "title": "RouterOS syslog",
+      "gridPos": {"x": 0, "y": 0, "w": 24, "h": 12},
+      "datasource": "Loki",
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "{app=\"mikrotik\"} |= ''"
+        }
+      ]
+    }
+  ],
+  "templating": {
+    "list": [
+      {
+        "name": "router",
+        "type": "query",
+        "datasource": {
+          "type": "loki",
+          "uid": "Loki"
+        },
+        "query": "label_values({app=\"mikrotik\"}, router)",
+        "includeAll": true
+      }
+    ]
+  }
+}

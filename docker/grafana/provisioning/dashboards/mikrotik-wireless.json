@@ -1,0 +1,53 @@
+{
+  "uid": "mikrotik-wireless",
+  "title": "MikroTik Wireless",
+  "schemaVersion": 38,
+  "version": 1,
+  "panels": [
+    {
+      "type": "timeseries",
+      "title": "Signal dBm",
+      "gridPos": {"x": 0, "y": 0, "w": 12, "h": 8},
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "avg by (ssid) (mikrotik_wifi_signal_dbm)"
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "CCQ",
+      "gridPos": {"x": 12, "y": 0, "w": 12, "h": 8},
+      "targets": [
+        {
+          "refId": "B",
+          "expr": "avg by (ssid) (mikrotik_wifi_ccq_percent)"
+        }
+      ]
+    },
+    {
+      "type": "stat",
+      "title": "Stations connected",
+      "gridPos": {"x": 0, "y": 8, "w": 6, "h": 6},
+      "targets": [
+        {
+          "refId": "C",
+          "expr": "sum(mikrotik_wifi_stations_total)"
+        }
+      ]
+    }
+  ],
+  "templating": {
+    "list": [
+      {
+        "name": "ssid",
+        "type": "query",
+        "datasource": "Prometheus",
+        "query": "label_values(mikrotik_wifi_signal_dbm, ssid)",
+        "multi": true,
+        "includeAll": true
+      }
+    ]
+  }
+}

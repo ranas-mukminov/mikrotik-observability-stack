@@ -1,0 +1,11 @@
+[
+  {
+    "labels": {
+      "router": "core-switch",
+      "snmp_target": "198.51.100.10",
+      "site": "dc",
+      "exporter": "snmp"
+    },
+    "targets": ["snmp-exporter:9116"]
+  }
+]

@@ -1,0 +1,115 @@
+name: mikrotik-observability-full
+services:
+  prometheus:
+    image: prom/prometheus:v2.51.2
+    restart: unless-stopped
+    env_file:
+      - ../.env
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --storage.tsdb.retention.time=${PROMETHEUS_RETENTION_DAYS:-15}d
+      - --web.enable-lifecycle
+      - --web.external-url=${PROMETHEUS_EXTERNAL_URL:-}
+    volumes:
+      - prometheus-data:/prometheus
+      - ../docker/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ../docker/prometheus/file_sd:/etc/prometheus/file_sd:ro
+      - ../docker/prometheus/alerts:/etc/prometheus/alerts:ro
+    ports:
+      - "${PROMETHEUS_PORT:-9090}:9090"
+    networks:
+      - observability
+    depends_on:
+      alertmanager:
+        condition: service_started
+
+  grafana:
+    image: grafana/grafana:10.4.2
+    restart: unless-stopped
+    depends_on:
+      - prometheus
+      - loki
+    env_file:
+      - ../.env
+    environment:
+      GF_SECURITY_ADMIN_USER: ${GRAFANA_ADMIN_USER:-admin}
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD:-admin}
+      GF_PATHS_PROVISIONING: /etc/grafana/provisioning
+      GF_INSTALL_PLUGINS: grafana-polystat-panel
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ../docker/grafana/provisioning:/etc/grafana/provisioning:ro
+    ports:
+      - "${GRAFANA_PORT:-3000}:3000"
+    networks:
+      - observability
+
+  routeros-exporter:
+    image: ghcr.io/swoga/mikrotik-exporter:latest
+    restart: unless-stopped
+    env_file:
+      - ../.env
+    volumes:
+      - ../docker/exporters/routeros_exporter/config-sample.yml:/config/config.yml:ro
+    command: ["--config=/config/config.yml"]
+    networks:
+      - observability
+
+  snmp-exporter:
+    image: prom/snmp-exporter:v0.25.0
+    restart: unless-stopped
+    volumes:
+      - ../docker/exporters/snmp_exporter/snmp.yml:/etc/snmp_exporter/snmp.yml:ro
+    networks:
+      - observability
+
+  loki:
+    image: grafana/loki:3.0.0
+    restart: unless-stopped
+    command: -config.file=/etc/loki/local-config.yml
+    volumes:
+      - loki-data:/loki
+      - ../docker/loki/loki-config.yml:/etc/loki/local-config.yml:ro
+    ports:
+      - "${LOKI_PORT:-3100}:3100"
+    networks:
+      - observability
+
+  promtail:
+    image: grafana/promtail:3.0.0
+    restart: unless-stopped
+    command:
+      - -config.file=/etc/promtail/config.yml
+      - -config.expand-env=true
+    env_file:
+      - ../.env
+    volumes:
+      - ../docker/promtail/promtail-config.yml:/etc/promtail/config.yml:ro
+      - promtail-positions:/var/lib/promtail
+    ports:
+      - "${PROMTAIL_SYSLOG_PORT:-1514}:1514/udp"
+    networks:
+      - observability
+
+  alertmanager:
+    image: prom/alertmanager:v0.27.0
+    restart: unless-stopped
+    volumes:
+      - ../docker/prometheus/alertmanager.yml:/etc/alertmanager/alertmanager.yml:ro
+    command:
+      - --config.file=/etc/alertmanager/alertmanager.yml
+    ports:
+      - "${ALERTMANAGER_PORT:-9093}:9093"
+    networks:
+      - observability
+
+networks:
+  observability:
+    name: observability
+
+volumes:
+  prometheus-data:
+  grafana-data:
+  loki-data:
+  promtail-positions:
