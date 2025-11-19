@@ -8,7 +8,9 @@ import urllib.request
 import pytest
 
 RUN_COMPOSE = os.getenv("MOS_RUN_COMPOSE_TESTS") == "1"
-pytestmark = pytest.mark.skipif(not RUN_COMPOSE, reason="Set MOS_RUN_COMPOSE_TESTS=1 to run compose tests")
+pytestmark = pytest.mark.skipif(
+    not RUN_COMPOSE, reason="Set MOS_RUN_COMPOSE_TESTS=1 to run compose tests"
+)
 
 
 def wait_for(url: str, timeout: int = 60) -> None:

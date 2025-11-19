@@ -1,4 +1,5 @@
 """Entry point for mosctl."""
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -14,21 +15,43 @@ from .validate import validate_devices
 
 app = typer.Typer(help="Control utility for the MikroTik Observability Stack.")
 console = Console()
-
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_CONFIG = Path("config/mikrotik-devices.yml")
 FALLBACK_CONFIG = Path("config/mikrotik-devices.example.yml")
 
 
 def resolve_config_path(path: Optional[Path]) -> Path:
+    """Return a resolved configuration path from user input or defaults."""
+
+    cwd = Path.cwd()
     if path:
-        return path
-    if DEFAULT_CONFIG.exists():
-        return DEFAULT_CONFIG
-    return FALLBACK_CONFIG
+        expanded = path.expanduser()
+        if expanded.is_absolute():
+            return expanded
+        return (cwd / expanded).resolve()
+
+    search_roots = [cwd]
+    if PROJECT_ROOT not in search_roots:
+        search_roots.append(PROJECT_ROOT)
+
+    for root in search_roots:
+        candidate = (root / DEFAULT_CONFIG).resolve()
+        if candidate.exists():
+            return candidate
+
+    for root in search_roots:
+        candidate = (root / FALLBACK_CONFIG).resolve()
+        if candidate.exists():
+            return candidate
+
+    # No file exists yet; return the fallback location under the project root.
+    return (search_roots[-1] / FALLBACK_CONFIG).resolve()
 
 
 @app.command("validate-config")
-def validate_config_cmd(config: Optional[Path] = typer.Option(None, "--config", path_type=Path)) -> None:
+def validate_config_cmd(
+    config: Optional[Path] = typer.Option(None, "--config", path_type=Path)
+) -> None:
     """Validate a MikroTik device inventory file."""
 
     cfg_path = resolve_config_path(config)
@@ -104,11 +127,12 @@ def generate_targets_cmd(
     except ConfigLoaderError as exc:
         console.print(f"[red]{exc}[/red]")
         raise typer.Exit(1) from exc
-
-    router_count, snmp_count = generate_file_sd(result.config, routeros_output, snmp_output)
-    console.print(
-        f"[green]Wrote {router_count} routeros and {snmp_count} snmp targets[/green]"
-    )
+    try:
+        router_count, snmp_count = generate_file_sd(result.config, routeros_output, snmp_output)
+    except RuntimeError as exc:
+        console.print(f"[red]{exc}[/red]")
+        raise typer.Exit(4) from exc
+    console.print(f"[green]Wrote {router_count} routeros and {snmp_count} snmp targets[/green]")
 
 
 @app.command("print-plan")

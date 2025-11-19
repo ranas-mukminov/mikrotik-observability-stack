@@ -7,7 +7,9 @@ import urllib.request
 import pytest
 
 RUN_COMPOSE = os.getenv("MOS_RUN_COMPOSE_TESTS") == "1"
-pytestmark = pytest.mark.skipif(not RUN_COMPOSE, reason="Set MOS_RUN_COMPOSE_TESTS=1 to run compose tests")
+pytestmark = pytest.mark.skipif(
+    not RUN_COMPOSE, reason="Set MOS_RUN_COMPOSE_TESTS=1 to run compose tests"
+)
 
 
 def wait_for(url: str, timeout: int = 60) -> None:
@@ -24,7 +26,6 @@ def wait_for(url: str, timeout: int = 60) -> None:
 
 def test_minimal_compose(tmp_path) -> None:
     compose_file = "compose/docker-compose.minimal.yml"
-    env = os.environ.copy()
     cmd = ["docker", "compose", "-f", compose_file, "up", "-d"]
     subprocess.run(cmd, check=True)
     try:

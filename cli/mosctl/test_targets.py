@@ -1,7 +1,9 @@
 """Connectivity helpers and Prometheus target generation."""
+
 from __future__ import annotations
 
 import json
+import os
 import shutil
 import socket
 import subprocess
@@ -73,11 +75,26 @@ def build_snmp_targets(devices: Iterable[Device]) -> List[dict]:
 
 
 def write_file_sd(entries: List[dict], path: Path) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(entries, indent=2, sort_keys=True))
+    """Persist Prometheus file_sd entries with explicit permission checks."""
+
+    try:
+        path.parent.mkdir(parents=True, exist_ok=True)
+    except OSError as exc:
+        raise RuntimeError(f"Failed to create directory {path.parent}: {exc}") from exc
+
+    if not os.access(path.parent, os.W_OK):
+        raise RuntimeError(f"Directory {path.parent} is not writable")
+
+    payload = json.dumps(entries, indent=2, sort_keys=True)
+    try:
+        path.write_text(payload)
+    except OSError as exc:
+        raise RuntimeError(f"Failed to write {path}: {exc}") from exc
 
 
-def generate_file_sd(config: DevicesConfig, routeros_path: Path, snmp_path: Path) -> Tuple[int, int]:
+def generate_file_sd(
+    config: DevicesConfig, routeros_path: Path, snmp_path: Path
+) -> Tuple[int, int]:
     router_entries = build_routeros_targets(config.routers)
     snmp_entries = build_snmp_targets(config.routers)
     write_file_sd(router_entries, routeros_path)

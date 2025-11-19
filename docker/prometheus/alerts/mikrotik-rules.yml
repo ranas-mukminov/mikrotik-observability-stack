@@ -8,7 +8,7 @@ groups:
           severity: warning
         annotations:
           summary: "High CPU on {{ $labels.instance }}"
-          description: "CPU utilization is {{ $value | printf "%.1f" }}% over 5m"
+          description: 'CPU utilization is {{ $value | printf "%.1f" }}% over 5m'
 
       - alert: MikroTikLowMemory
         expr: avg by (instance) (mikrotik_memory_available_bytes / mikrotik_memory_total_bytes) < 0.1
