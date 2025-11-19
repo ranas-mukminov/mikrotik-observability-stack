@@ -1,25 +1,91 @@
-# MikroTik Observability Stack – Out of the Box
+# 📊 MikroTik Observability Stack
+
+[![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
+[![CI](https://github.com/ranas-mukminov/mikrotik-observability-stack/actions/workflows/ci.yml/badge.svg)](https://github.com/ranas-mukminov/mikrotik-observability-stack/actions/workflows/ci.yml)
+[![Docker Compose](https://img.shields.io/badge/Docker%20Compose-ready-2496ED?logo=docker)](https://docs.docker.com/compose/)
+[![Kubernetes](https://img.shields.io/badge/Kubernetes-ready-326ce5?logo=kubernetes)](https://kubernetes.io/)
+
+Self-hosted observability for MikroTik RouterOS: metrics, logs, and dashboards in minutes.
+
+**Production-ready** | **Docker & Kubernetes** | **Pre-configured Dashboards** | **MikroTik RouterOS**
+
+> ⚡ **[Quick Start](#-quick-start-in-3-commands--быстрый-старт-за-3-команды)** | 📖 **[Documentation](#-documentation--документация)** | 🎨 **[Dashboards](#-pre-configured-dashboards--готовые-дашборды)** | 🔧 **[Profiles](#-deployment-options--варианты-развёртывания)** | 💼 **[Professional Services](#-production-deployment--professional-support)**
+
+---
 
 ## English
 
-![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)
-![CI](https://github.com/run-as-daemon/mikrotik-observability-stack/actions/workflows/ci.yml/badge.svg)
-![Docker Compose](https://img.shields.io/badge/stack-Docker%20Compose-blue)
-![Kubernetes Ready](https://img.shields.io/badge/Kubernetes-ready-326ce5)
+### 📑 Table of Contents
 
-**Self-hosted observability for MikroTik RouterOS: metrics, logs, and dashboards in minutes.**
+- [Why This Project](#why-this-project)
+- [Features](#-features--возможности)
+- [Quick Start in 3 Commands](#-quick-start-in-3-commands--быстрый-старт-за-3-команды)
+- [Architecture Overview](#architecture-overview)
+- [Deployment Options](#-deployment-options--варианты-развёртывания)
+- [Pre-configured Dashboards](#-pre-configured-dashboards--готовые-дашборды)
+- [Configuration](#configuration)
+- [Testing and Validation](#testing-and-validation)
+- [Troubleshooting](#-troubleshooting--решение-проблем)
+- [Security and Performance](#security-and-performance)
+- [Legal / Responsible Use](#legal--responsible-use)
+- [Production Deployment & Professional Support](#-production-deployment--professional-support)
+- [Author & Professional Services](#-author--professional-services)
+- [Support](#-support--поддержка)
+- [Documentation](#-documentation--документация)
+- [Contributing](#contributing)
+- [License](#license)
 
 ### Why this project
 
 MikroTik routers power countless SMB networks, ISPs, and homelabs, yet teams still glue together Prometheus, Grafana, and exporters manually. This repository delivers an opinionated, vendor-neutral stack that focuses on RouterOS nuances while staying extensible for future needs. Everything lives in source control, so you can audit, customize, and redeploy confidently.
 
-### What you get
+---
 
-- Docker Compose stacks with Prometheus, Grafana, Loki, Alertmanager, and MikroTik-friendly exporters.
-- Pre-provisioned Grafana dashboards covering WAN throughput, CPU/RAM/temperature, VPNs, queues/QoS, and wireless health.
-- RouterOS syslog ingestion via Promtail + Loki, searchable inside Grafana Explore.
-- Declarative device inventory in `config/mikrotik-devices.yml` with per-router labels and credentials.
-- Default alert rules for high CPU, low memory, packet loss, and interface/link degradation.
+### 🎯 Production Deployment & Professional Support
+
+Looking for **production-grade MikroTik monitoring** or **professional DevOps assistance**?
+
+**[run-as-daemon.ru](https://run-as-daemon.ru)** — Professional DevOps & Monitoring Services
+
+**Services:**
+- 📊 **Network Monitoring**: Complete MikroTik observability stack deployment
+- 🔍 **Custom Dashboards**: Tailored Grafana dashboards for your infrastructure
+- 🏗️ **Infrastructure Design**: Scalable monitoring architecture (Docker, Kubernetes, Nomad)
+- 🔒 **Security-First**: Secure exporters, authentication, encrypted communications
+- ⚙️ **Integration**: Connect with existing monitoring systems (Zabbix, PRTG, etc.)
+- 📈 **Performance Optimization**: Prometheus tuning, efficient scraping, retention policies
+- 🤖 **Automation**: Ansible playbooks, Infrastructure as Code
+- 🚨 **Alerting**: Smart alert rules, integration with PagerDuty, Slack, Teams
+
+💬 **Contact for consulting**: Telegram, VK, WhatsApp, GitHub
+
+---
+
+## ✨ Features / Возможности
+
+### English:
+- 📊 **Complete Observability**: Metrics (Prometheus) + Logs (Loki) + Visualization (Grafana)
+- 🎨 **Pre-configured Dashboards**: WAN, CPU/RAM, VPN, QoS, Wireless, Firewall
+- 🔌 **Multiple Exporters**: RouterOS API and SNMP support
+- 📝 **Centralized Logging**: Syslog collection via Promtail + Loki
+- 🚨 **Smart Alerting**: CPU, memory, packet loss, interface degradation alerts
+- 🐳 **Docker Compose**: Quick start with minimal and full profiles
+- ☸️ **Kubernetes Ready**: Production-grade manifests included
+- 🔒 **Security-First**: Read-only accounts, firewall rules, encrypted connections
+- 📈 **Scalable**: From homelab to ISP-scale deployments
+- 🔧 **CLI Tools**: mosctl for validation and config generation
+
+### Русский:
+- 📊 **Полная наблюдаемость**: Метрики (Prometheus) + Логи (Loki) + Визуализация (Grafana)
+- 🎨 **Готовые дашборды**: WAN, CPU/RAM, VPN, QoS, беспроводные, фаервол
+- 🔌 **Несколько экспортёров**: Поддержка RouterOS API и SNMP
+- 📝 **Централизованные логи**: Сбор syslog через Promtail + Loki
+- 🚨 **Умные алерты**: CPU, память, потери пакетов, падение интерфейсов
+- 🐳 **Docker Compose**: Быстрый старт с минимальным и полным профилями
+- ☸️ **Готовность к Kubernetes**: Продакшн-манифесты включены
+- 🔒 **Безопасность**: Read-only аккаунты, правила фаервола
+- 📈 **Масштабируемость**: От домашней лаборатории до масштабов ISP
+- 🔧 **CLI инструменты**: mosctl для валидации и генерации конфигов
 
 ### Architecture overview
 
@@ -45,33 +111,44 @@ Logs path: Routers forward syslog to Promtail which forwards structured streams 
                               Grafana
 ```
 
-### Quick start
+## 🎯 Quick Start in 3 Commands / Быстрый старт за 3 команды
 
-**Requirements**
+### English:
+```bash
+# 1. Clone and configure
+git clone https://github.com/ranas-mukminov/mikrotik-observability-stack.git && cd mikrotik-observability-stack
+cp config/mikrotik-devices.example.yml config/mikrotik-devices.yml && cp config/env.example .env
 
-- Docker 24+ and Docker Compose plugin.
-- MikroTik routers with API and/or SNMP enabled, plus `/system logging` rule to send syslog to the Promtail host.
-- Optional: GNU Make (for helper commands) and Python 3.11+ for CLI/testing.
+# 2. Start the stack (minimal profile)
+docker compose -f compose/docker-compose.minimal.yml up -d
 
-**Steps**
+# 3. Access Grafana
+open http://localhost:3000  # Login: admin / password from .env
+```
 
-1. Clone the repo: `git clone https://github.com/run-as-daemon/mikrotik-observability-stack.git`.
-2. Copy `config/mikrotik-devices.example.yml` to `config/mikrotik-devices.yml` and describe each router (name, address, exporter type, credentials, labels).
-3. Copy `config/env.example` to `.env` and adjust Grafana admin password, Prometheus retention limits, and Loki ports.
-4. Optional: tune Prometheus scrape intervals or alert thresholds under `docker/prometheus/`.
-5. Start the **minimal** profile (Prometheus + Grafana + RouterOS exporter):
-   ```bash
-   docker compose -f compose/docker-compose.minimal.yml up -d
-   ```
-6. Start the **full** profile (adds Loki, Promtail, Alertmanager, SNMP exporter):
-   ```bash
-   docker compose -f compose/docker-compose.full.yml up -d
-   ```
-7. Access services:
-   - Grafana: `http://localhost:3000` (default admin `admin` / password from `.env`).
-   - Prometheus: `http://localhost:9090`.
-   - Alertmanager: `http://localhost:9093` (full stack).
-   - Loki: `http://localhost:3100` (API only).
+### Русский:
+```bash
+# 1. Клонировать и настроить
+git clone https://github.com/ranas-mukminov/mikrotik-observability-stack.git && cd mikrotik-observability-stack
+cp config/mikrotik-devices.example.yml config/mikrotik-devices.yml && cp config/env.example .env
+
+# 2. Запустить стек (минимальный профиль)
+docker compose -f compose/docker-compose.minimal.yml up -d
+
+# 3. Открыть Grafana
+open http://localhost:3000  # Логин: admin / пароль из .env
+```
+
+📋 **Access all services:**
+- Grafana: http://localhost:3000
+- Prometheus: http://localhost:9090
+- Alertmanager: http://localhost:9093 (full profile)
+
+**Requirements:**
+- Docker 24+ and Docker Compose plugin
+- MikroTik routers with API and/or SNMP enabled
+- `/system logging` rule to send syslog to the Promtail host
+- Optional: GNU Make and Python 3.11+ for CLI/testing
 
 ### Configuration
 
@@ -101,10 +178,112 @@ routers:
 - Credentials are stored locally only; use secrets management in production.
 - `.env` variables control Grafana admin credentials, Prometheus retention, Loki retention, and exposed ports.
 
-### Profiles
+## 🚀 Deployment Options / Варианты развёртывания
 
-- **Minimal** – Prometheus, Grafana, RouterOS API exporter, file-based service discovery. Suitable for metrics-only labs or PoC.
-- **Full** – Adds SNMP exporter, Loki, Promtail, Alertmanager, and persistent volumes. Ideal for SMB deployments with syslog visibility and alerting.
+| Feature | Minimal | Full | Kubernetes |
+|---------|---------|------|------------|
+| **Prometheus** | ✅ | ✅ | ✅ |
+| **Grafana** | ✅ | ✅ | ✅ |
+| **RouterOS Exporter** | ✅ | ✅ | ✅ |
+| **SNMP Exporter** | ❌ | ✅ | ✅ |
+| **Loki** | ❌ | ✅ | ✅ |
+| **Promtail** | ❌ | ✅ | ✅ |
+| **Alertmanager** | ❌ | ✅ | ✅ |
+| **Persistent Volumes** | ❌ | ✅ | ✅ |
+| **High Availability** | ❌ | ❌ | ✅ |
+| **Best For** | PoC, Labs | SMB Production | Enterprise |
+
+**Recommendations:**
+- **Minimal**: Testing, homelab, metrics-only monitoring
+- **Full**: Small business production, complete observability
+- **Kubernetes**: Multi-site, high availability, enterprise scale
+
+**Start Commands:**
+```bash
+# Minimal profile (Prometheus + Grafana + RouterOS exporter)
+docker compose -f compose/docker-compose.minimal.yml up -d
+
+# Full profile (adds Loki, Promtail, Alertmanager, SNMP exporter)
+docker compose -f compose/docker-compose.full.yml up -d
+
+# Kubernetes (see k8s/ directory for manifests)
+kubectl apply -f k8s/namespaces.yml
+kubectl apply -f k8s/
+```
+
+## 🎨 Pre-configured Dashboards / Готовые дашборды
+
+### English:
+The stack includes professionally designed Grafana dashboards:
+
+- **📡 WAN Overview**: Throughput, latency, packet loss, traffic distribution
+- **💻 System Resources**: CPU, RAM, disk, temperature monitoring
+- **🔌 Interfaces**: Traffic per interface, errors, status
+- **🔐 VPN Tunnels**: Active connections, throughput, user statistics
+- **📶 Wireless**: Client count, signal strength, channel utilization
+- **⚙️ QoS Queues**: Queue utilization, dropped packets, bandwidth allocation
+- **🛡️ Firewall**: Rules hits, connection tracking, NAT statistics
+- **🚨 Alerts Overview**: Active alerts, alert history, notification status
+
+### Русский:
+Стек включает профессионально разработанные дашборды Grafana:
+
+- **📡 WAN Обзор**: Пропускная способность, задержки, потери пакетов
+- **💻 Системные ресурсы**: CPU, RAM, диск, температура
+- **🔌 Интерфейсы**: Трафик по интерфейсам, ошибки, статус
+- **🔐 VPN Туннели**: Активные подключения, пропускная способность
+- **📶 Беспроводная сеть**: Количество клиентов, уровень сигнала
+- **⚙️ QoS Очереди**: Использование очередей, отброшенные пакеты
+- **🛡️ Фаервол**: Срабатывания правил, отслеживание соединений
+- **🚨 Обзор алертов**: Активные алерты, история, статус уведомлений
+
+## 🐛 Troubleshooting / Решение проблем
+
+### Common Issues / Частые проблемы
+
+#### 1. No Data in Grafana
+**English**: Check Prometheus targets at http://localhost:9090/targets. Ensure your MikroTik devices are reachable and API/SNMP credentials are correct in `config/mikrotik-devices.yml`.
+
+**Русский**: Проверьте цели Prometheus по адресу http://localhost:9090/targets. Убедитесь, что устройства MikroTik доступны и учётные данные API/SNMP верны в `config/mikrotik-devices.yml`.
+
+#### 2. High Memory Usage
+**English**: Adjust retention policies in `.env`. Reduce `PROMETHEUS_RETENTION_DAYS` or increase scrape intervals in `docker/prometheus/prometheus.yml`.
+
+**Русский**: Настройте политики ретенции в `.env`. Уменьшите `PROMETHEUS_RETENTION_DAYS` или увеличьте интервалы опроса в `docker/prometheus/prometheus.yml`.
+
+#### 3. Syslog Not Appearing in Loki
+**English**: Verify RouterOS logging configuration points to the Promtail host. Check Promtail logs for connection errors. Ensure UDP port 1514 is open.
+
+**Русский**: Проверьте, что настройки логирования RouterOS указывают на хост Promtail. Проверьте логи Promtail на наличие ошибок подключения. Убедитесь, что UDP порт 1514 открыт.
+
+#### 4. Exporter Connection Refused
+**English**: Check firewall rules on MikroTik devices. Ensure API (port 8728) or SNMP (port 161) is enabled and accessible. Verify read-only user accounts exist.
+
+**Русский**: Проверьте правила фаервола на устройствах MikroTik. Убедитесь, что API (порт 8728) или SNMP (порт 161) включены и доступны. Проверьте наличие учётных записей read-only.
+
+### Debug Commands
+```bash
+# Check stack status
+docker compose ps
+
+# View exporter logs
+docker compose logs -f routeros-exporter
+
+# Validate configuration
+mosctl validate-config
+
+# Check Prometheus targets
+curl http://localhost:9090/api/v1/targets
+
+# Test Loki query
+curl -G -s "http://localhost:3100/loki/api/v1/query" --data-urlencode 'query={job="syslog"}'
+
+# Check container resource usage
+docker stats
+
+# Restart specific service
+docker compose restart prometheus
+```
 
 ### Testing and validation
 
@@ -116,30 +295,93 @@ routers:
   - `mosctl check-connectivity`
   - `mosctl generate-prometheus-targets`
 
-### Security and performance
-
 - Create dedicated read-only MikroTik accounts for SNMP and API exporters.
 - Restrict API/SNMP access via firewall address-lists; Prometheus should be the only poller.
 - Adjust scrape interval and `PROMETHEUS_RETENTION_DAYS` to balance disk use vs. history.
 - CI runs linting, formatting, dependency auditing, and container security scans via GitHub Actions + `scripts/security-scan.sh`.
 
-### Legal / responsible use
+### Security and performance
 
 - Monitor only networks you own or are authorized to operate.
 - MikroTik, RouterOS, Grafana, Prometheus, and Loki are trademarks of their respective owners; this project is unaffiliated.
 - No proprietary MikroTik software or MIB files are redistributed. Provide your own RouterOS licenses.
 
-### Professional services – run-as-daemon.ru
+### Legal / responsible use
 
-> **Professional services by [run-as-daemon.ru](https://run-as-daemon.ru)**
-> Maintained by a DevSecOps/SRE engineer focused on safe network observability.
-> Engage for custom consulting, hardening, production rollouts, and ongoing support for MikroTik-heavy infrastructures.
+## 👨‍💻 Author & Professional Services
 
-### Contributing
+**Ранас М. (Ranas M.)** — DevOps Engineer & Network Monitoring Specialist
+
+### 🌐 Professional Services: [run-as-daemon.ru](https://run-as-daemon.ru)
+
+**"Observe by design. Scale by default"** — Production-ready monitoring with performance optimization
+
+#### 💼 Services Offered:
+
+**📊 Monitoring & Observability**
+- MikroTik observability stack deployment and tuning
+- Custom Grafana dashboard development
+- Prometheus optimization for large-scale networks
+- Multi-site monitoring aggregation
+- Integration with existing tools (Zabbix, PRTG, Nagios)
+
+**🏗️ Infrastructure & Orchestration**
+- Docker, Kubernetes, Nomad deployments
+- High-availability cluster configuration
+- Scalable monitoring architecture
+- CI/CD integration for monitoring configs
+
+**🔒 Security & Hardening**
+- Secure exporter configuration
+- Authentication and encryption setup
+- Network security for monitoring systems
+- Compliance and audit trails
+
+**⚙️ Network Administration**
+- MikroTik router configuration and optimization
+- VPN setup (WireGuard, OpenVPN, L2TP/IPsec)
+- Firewall rules and network segmentation
+- Performance troubleshooting
+
+#### 📞 Contact for Consulting:
+- 🌐 Website: [run-as-daemon.ru](https://run-as-daemon.ru)
+- 💬 Telegram: Contact via website
+- 📱 VK: Contact via website
+- 💼 WhatsApp: Contact via website
+- 🐙 GitHub: [@ranas-mukminov](https://github.com/ranas-mukminov)
+
+## 📮 Support / Поддержка
+
+**Community Support:**
+- Open an issue on [GitHub Issues](https://github.com/ranas-mukminov/mikrotik-observability-stack/issues)
+- Check existing issues and discussions
+- Review documentation and examples
+
+**Professional Support:**
+- Custom monitoring solutions
+- Production deployment assistance
+- Performance optimization consulting
+- 24/7 monitoring and incident response
+- Training and workshops
+- Long-term maintenance contracts
+
+Contact: [run-as-daemon.ru](https://run-as-daemon.ru)
+
+## 📚 Documentation / Документация
+
+- **[CONTRIBUTING.md](./CONTRIBUTING.md)** - Contribution guidelines
+- **[LEGAL.md](./LEGAL.md)** - Legal disclaimers and acceptable use
+- **[CHANGELOG.md](./CHANGELOG.md)** - Version history and updates
+- **[Docker Compose Files](./compose/)** - Deployment configurations
+- **[Kubernetes Manifests](./k8s/)** - K8s production deployments
+- **[CLI Tools](./cli/)** - mosctl command-line utilities
+- **[Scripts](./scripts/)** - Validation and setup scripts
 
 - Open an issue for bugs or feature proposals.
 - Fork, branch, and submit a PR covered by unit tests and lint checks.
 - Sign off commits if your organization requires DCO.
+
+### Contributing
 
 ### License
 
@@ -147,26 +389,37 @@ Released under the [Apache License 2.0](LICENSE). See `LEGAL.md` for acceptable 
 
 ---
 
+**Made with ❤️ for MikroTik Network Monitoring**
+
+**Professional DevOps & Monitoring Services:** [run-as-daemon.ru](https://run-as-daemon.ru)
+
+---
+
 ## Русский
 
-![Лицензия: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)
-![CI](https://github.com/run-as-daemon/mikrotik-observability-stack/actions/workflows/ci.yml/badge.svg)
-![Docker Compose](https://img.shields.io/badge/stack-Docker%20Compose-blue)
-![Kubernetes Ready](https://img.shields.io/badge/Kubernetes-ready-326ce5)
+### 📑 Содержание
 
-**Самостоятельно развёртываемый стек наблюдаемости для MikroTik RouterOS: метрики и логи за несколько минут.**
+- [Зачем этот проект](#зачем-этот-проект)
+- [Возможности](#-features--возможности)
+- [Быстрый старт за 3 команды](#-quick-start-in-3-commands--быстрый-старт-за-3-команды)
+- [Обзор архитектуры](#обзор-архитектуры)
+- [Варианты развёртывания](#-deployment-options--варианты-развёртывания)
+- [Готовые дашборды](#-pre-configured-dashboards--готовые-дашборды)
+- [Конфигурация](#конфигурация)
+- [Тесты и проверки](#тесты-и-проверки)
+- [Решение проблем](#-troubleshooting--решение-проблем)
+- [Безопасность и производительность](#безопасность-и-производительность)
+- [Правовое использование](#правовое-использование)
+- [Продакшн развёртывание и профессиональная поддержка](#-production-deployment--professional-support)
+- [Автор и профессиональные услуги](#-author--professional-services)
+- [Поддержка](#-support--поддержка)
+- [Документация](#-documentation--документация)
+- [Вклад](#вклад)
+- [Лицензия](#лицензия-1)
 
 ### Зачем этот проект
 
 MikroTik широко используется в малом бизнесе, у интеграторов и в домашних лабораториях, но готового, единообразного стека наблюдаемости почти нет. Здесь собраны проверенные компоненты (Prometheus, Grafana, Loki, Alertmanager и экспортёры), настроенные с учётом особенностей RouterOS, но без привязки к проприетарным решениям.
-
-### Что входит
-
-- Готовые композиции Docker для Prometheus, Grafana, Loki, Alertmanager и экспортёров MikroTik (API и SNMP).
-- Преднастроенные дашборды Grafana по WAN, CPU/RAM/температуре, VPN/туннелям, очередям QoS и беспроводным показателям.
-- Централизованный сбор syslog через Promtail + Loki с просмотром в Grafana Explore.
-- Декларативный YAML-файл устройств `config/mikrotik-devices.yml` с ярлыками и типами экспортёров.
-- Базовые правила тревог: высокая загрузка CPU/памяти, потери пакетов, падение интерфейсов.
 
 ### Обзор архитектуры
 
@@ -192,44 +445,11 @@ MikroTik широко используется в малом бизнесе, у 
                               Grafana
 ```
 
-### Быстрый старт
-
-**Что потребуется**
-
-- Docker 24+ с плагином Compose.
-- Роутеры MikroTik с включёнными API/SNMP и правилом `/system logging` на отправку syslog.
-- Python 3.11+ для CLI и тестов (по желанию).
-
-**Шаги**
-
-1. Клонируйте репозиторий.
-2. Скопируйте `config/mikrotik-devices.example.yml` → `config/mikrotik-devices.yml` и опишите устройства.
-3. Скопируйте `config/env.example` → `.env`, настройте пароль Grafana, ретенции Prometheus/Loki, порты сервисов.
-4. При необходимости скорректируйте интервалы опроса и правила алертов под свою сеть.
-5. Запуск минимального профиля:
-   ```bash
-   docker compose -f compose/docker-compose.minimal.yml up -d
-   ```
-6. Запуск полного профиля:
-   ```bash
-   docker compose -f compose/docker-compose.full.yml up -d
-   ```
-7. Доступ по умолчанию:
-   - Grafana: `http://localhost:3000`, логин `admin`, пароль из `.env`.
-   - Prometheus: `http://localhost:9090`.
-   - Alertmanager: `http://localhost:9093`.
-   - Loki API: `http://localhost:3100`.
-
 ### Конфигурация
 
 `config/mikrotik-devices.yml` хранит список роутеров с обязательными полями `name`, `address`, `exporter`. Поддерживаются типы `routeros` и `snmp`. Можно добавлять произвольные ярлыки для фильтрации в Grafana.
 
 Переменные `.env` управляют учётными данными Grafana, ретенцией Prometheus/Loki и портами сервисов. Для продакшена храните секреты в менеджере секретов и ограничивайте доступы.
-
-### Профили
-
-- **Minimal** – Prometheus + Grafana + RouterOS exporter. Только метрики.
-- **Full** – добавляет SNMP exporter, Loki, Promtail, Alertmanager и постоянные тома. Полный стек наблюдаемости.
 
 ### Тесты и проверки
 
@@ -251,12 +471,6 @@ MikroTik широко используется в малом бизнесе, у 
 - MikroTik и RouterOS — торговые марки MikroTik SIA; проект не аффилирован с MikroTik, Grafana Labs или Prometheus.
 - Репозиторий не содержит проприетарных файлов MikroTik; все тексты и конфиги созданы с нуля.
 
-### Профессиональные услуги – run-as-daemon.ru
-
-> **Профессиональная настройка и сопровождение от [run-as-daemon.ru](https://run-as-daemon.ru)**
-> Автор — инженер DevSecOps/SRE, специализирующийся на безопасной наблюдаемости сетей MikroTik.
-> Можно заказать аудит, проектирование, внедрение и поддержку стека наблюдаемости «под ключ».
-
 ### Вклад
 
 - Сообщайте о проблемах через Issues, предлагайте улучшения PR-ами.
@@ -265,3 +479,9 @@ MikroTik широко используется в малом бизнесе, у 
 ### Лицензия
 
 Проект распространяется по [лицензии Apache 2.0](LICENSE). Рекомендации по правомерному использованию описаны в `LEGAL.md`.
+
+---
+
+**Made with ❤️ for MikroTik Network Monitoring**
+
+**Professional DevOps & Monitoring Services:** [run-as-daemon.ru](https://run-as-daemon.ru)
